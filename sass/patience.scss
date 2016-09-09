@@ -1,0 +1,103 @@
+
+@import "compass/css3";
+@import "compass/reset";
+
+body{
+    background: #221f1f;
+}
+.inPlay{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+
+    li{
+        position: relative;
+        float: left;
+        margin: 0 40px 0 0;
+        width: 125px;
+        height: 180px;
+    }
+    .deck{
+        .card:nth-child(2) {
+            top: 4px;
+            left: 4px;
+        }
+        .card:nth-child(3) {
+            top: 8px;
+            left: 8px;
+        }
+    }
+    .show{
+        .card:nth-child(2) {
+            left: 20px;
+        }
+        .card:nth-child(3) {
+            left: 40px;
+        }
+    }
+}
+.stacks{
+    margin: 20px 20px 0 0;
+    clear: both;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+
+    .stack{
+        float: right;
+        margin: 0 10px;
+        width: 125px;
+        height: 174px;
+        @include border-radius(4px);
+        border: 1px #ccc solid;
+    }
+}
+.playChannels{
+    margin: 40px 20px 20px;
+
+    li{
+        position: relative;
+        float: left;
+        width: 14.2%;
+        height: 500px;
+    }
+    $top: 0;
+    $left: 0;
+    @each $card in 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 {
+
+        .card:nth-child(#{$card}) {
+            top: $top;
+            left: $left;
+        }
+
+        $top: $top + 30px;
+        $left: $left + 4px;
+    }
+}
+.card{
+    position: absolute;
+    width: 125px;
+    height: 174px;
+    background: url('../images/cards.png') no-repeat -1624px 0;
+
+    &.empty{
+        background: 0;
+    }
+}
+$position: 0;
+@each $face in 'ace', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'jack', 'queen', 'king' {
+    .card.clubs-#{$face} {
+        background-position: $position 0;
+    }
+    .card.hearts-#{$face} {
+        background-position: $position -174px;
+    }
+    .card.spades-#{$face} {
+        background-position: $position -348px;
+    }
+    .card.diamonds-#{$face} {
+        background-position: $position -522px;
+    }
+
+    $position: $position - 125px;
+}

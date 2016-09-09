@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Patience</title>
+
+        <link rel="stylesheet" href="css/patience.css">
+    </head>
+    <body>
+        <div id="board" class="board"></div>
+
+        <script id="playBoard" type="text/x-handlebars-template">
+
+            <ul class="inPlay">
+                <li class="deck">
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                </li>
+                <li class="show">
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card diamonds-three"></div>
+                </li>
+            </ul>
+
+            <ul class="stacks">
+                {{#stackChannels}}
+                    <li class="stack drop" data-drop="{{@index}}">
+                        {{#.}}
+                            <div class="card {{className}}"></div>
+                        {{/.}}
+                    </li>
+                {{/stackChannels}}
+            </ul>
+
+            <ul class="playChannels">
+                {{#playChannels}}
+                    <li class="drop" data-drop="{{@index}}">
+                        {{#.}}
+                            <div class="card {{#if faceUp}}{{className}}{{else}}faceDown{{/if}}"></div>
+                        {{/.}}
+                    </li>
+                {{/playChannels}}
+            </ul>
+        </script>
+
+        <script src="bower_components/handlebars/handlebars.min.js"></script>
+
+        <script src="js/utils.js"></script>
+        <script src="js/view.js"></script>
+        <script src="js/cards.js"></script>
+        <script src="js/game.js"></script>
+        <script src="js/board.js"></script>
+
+        <script src="js/controller.js"></script>
+    </body>
+</html>
