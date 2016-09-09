@@ -35,6 +35,7 @@ class View {
             }, false);
         }, this);
 
+        console.log(this.dropZones);
         // mouse over play channels
         this.dropZones.forEach((zone) => {
 
@@ -47,7 +48,8 @@ class View {
             });
         });
 
-        this.zoneMatrix = matrix;
+        console.log('send matrix', matrix);
+        _.trigger('update:matrix', matrix);
 
         // mouse up
         document.documentElement.addEventListener('mouseup', (evt) => {
@@ -63,7 +65,10 @@ class View {
     }
 
 
-
+    /**
+     * main render method, dumps a shit tonne of elements in the dom and re
+     * binds events to them.
+     */
     render () {
 
         console.log('render');

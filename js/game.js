@@ -9,6 +9,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * @class
  */
 var Game = function () {
+
+    /**
+     * constructor function
+     *
+     * @constructor
+     */
     function Game(cards, board) {
         _classCallCheck(this, Game);
 
@@ -52,13 +58,8 @@ var Game = function () {
                     lastCard = channel[channel.length - 1];
 
                     if (lastCard.id - 1 === activeCard.id && lastCard.color !== activeCard.color) {
-                        console.log('we can drop here', this.board.previousZone);
-
                         this.removeCard(this.playChannels, this.board.previousZone, activeCard);
-
                         channel.push(activeCard);
-
-                        this.render();
                     }
 
                     _.trigger('release:card');
@@ -126,24 +127,6 @@ var Game = function () {
             console.log(this.playChannels);
             return this;
         }
-
-        /**
-         * render
-         * @returns {Game}
-         */
-        //render () {
-        //
-        //    var template = Handlebars.compile(document.getElementById('playBoard').innerHTML);
-        //
-        //    this.$board.innerHTML = template({
-        //        playChannels: this.playChannels,
-        //        stackChannels: this.stackChannels
-        //    });
-        //
-        //    _.trigger('rebind:events');
-        //    return this;
-        //}
-
     }]);
 
     return Game;

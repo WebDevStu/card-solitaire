@@ -35,10 +35,12 @@ class Board {
      */
     getZone (x, y) {
 
-        return this.zoneMatrix.find((zone) => {
+        console.log(this.zoneMatrix);
 
-            var onXAxis = (x >= zone.left) && (x <= (zone.left + zone.width)),
-                onYAxis = (y >= zone.top)  && (y <= (zone.top + zone.height));
+        return this.zoneMatrix.find(({left, top, width, height}) => {
+
+            var onXAxis = (x >= left) && (x <= (left + width)),
+                onYAxis = (y >= top)  && (y <= (top + height));
 
             return onXAxis && onYAxis;
         });
@@ -53,7 +55,7 @@ class Board {
 
         // find the zone
         this.activeZone = this.getZone(x, y);
-        
+
         this.card.removeAttribute('style');
 
         this.dragging = false;
@@ -78,5 +80,13 @@ class Board {
 
         this.card     = null;
         this.dragging = false;
+    }
+
+
+    /**
+     * takes the matrix from the view
+     */
+    updateMatrix (matrix) {
+        this.zoneMatrix = matrix;
     }
 }

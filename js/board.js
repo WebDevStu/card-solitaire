@@ -48,10 +48,17 @@ var Board = function () {
         key: 'getZone',
         value: function getZone(x, y) {
 
-            return this.zoneMatrix.find(function (zone) {
+            console.log(this.zoneMatrix);
 
-                var onXAxis = x >= zone.left && x <= zone.left + zone.width,
-                    onYAxis = y >= zone.top && y <= zone.top + zone.height;
+            return this.zoneMatrix.find(function (_ref) {
+                var left = _ref.left;
+                var top = _ref.top;
+                var width = _ref.width;
+                var height = _ref.height;
+
+
+                var onXAxis = x >= left && x <= left + width,
+                    onYAxis = y >= top && y <= top + height;
 
                 return onXAxis && onYAxis;
             });
@@ -97,6 +104,16 @@ var Board = function () {
 
             this.card = null;
             this.dragging = false;
+        }
+
+        /**
+         * takes the matrix from the view
+         */
+
+    }, {
+        key: 'updateMatrix',
+        value: function updateMatrix(matrix) {
+            this.zoneMatrix = matrix;
         }
     }]);
 

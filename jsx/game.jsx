@@ -4,6 +4,11 @@
  */
 class Game {
 
+    /**
+     * constructor function
+     *
+     * @constructor
+     */
     constructor (cards, board) {
 
         // map cards class
@@ -44,13 +49,8 @@ class Game {
                 lastCard = channel[channel.length - 1];
 
                 if ((lastCard.id - 1 === activeCard.id) && (lastCard.color !== activeCard.color)) {
-                    console.log('we can drop here', this.board.previousZone);
-
                     this.removeCard(this.playChannels, this.board.previousZone, activeCard);
-
                     channel.push(activeCard);
-
-                    this.render();
                 }
 
                 _.trigger('release:card');
@@ -115,22 +115,4 @@ class Game {
         console.log(this.playChannels);
         return this;
     }
-
-
-    /**
-     * render
-     * @returns {Game}
-     */
-    //render () {
-    //
-    //    var template = Handlebars.compile(document.getElementById('playBoard').innerHTML);
-    //
-    //    this.$board.innerHTML = template({
-    //        playChannels: this.playChannels,
-    //        stackChannels: this.stackChannels
-    //    });
-    //
-    //    _.trigger('rebind:events');
-    //    return this;
-    //}
 }
