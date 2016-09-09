@@ -1,0 +1,29 @@
+{
+  "name": "patience",
+  "version": "1.0.0",
+  "description": "Card Solitaire - famous card game recreated in JavaScript",
+  "main": "index.js",
+  "dependencies": {
+    "babel": "^6.5.2",
+    "babel-eslint": "^6.1.2",
+    "babel-preset-es2015": "^6.14.0"
+  },
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-eslint": "^6.1.2",
+    "babel-preset-es2015": "^6.14.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WebDevStu/patience.git"
+  },
+  "author": "Stewart Anderson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/WebDevStu/patience/issues"
+  },
+  "homepage": "https://github.com/WebDevStu/patience#readme"
+}

@@ -1,49 +1,39 @@
-/**
- * DeckOfCards
- *
- * @constructor
- */
-var DeckOfCards = function () {
 
-    this.deck = [];
-
-    this.generateDeck();
-};
-
-// extend prototype
-_.extend(DeckOfCards.prototype, {
-
-
-    /**
-     * colours
-     */
-    colors: {
+const
+    colors = {
         'clubs':    'black',
         'spades':   'black',
         'hearts':   'red',
         'diamonds': 'red'
     },
+    faces = ['ace', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'jack', 'queen', 'king'],
+    suits = ['clubs', 'spades', 'hearts', 'diamonds'];
+
+/**
+ * DeckOfCards
+ *
+ * @class
+ */
+class DeckOfCards {
 
     /**
-     * face
-     */
-    face: ['ace', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'jack', 'queen', 'king'],
-
-
-    /**
-     * suit
-     */
-    suit: ['clubs', 'spades', 'hearts', 'diamonds'],
-
-
-    /**
-     * generateDeck
+     * constructor function
      *
-     * @returns {DeckOfCards}
+     * @constructor
      */
-    generateDeck: function () {
+    constructor () {
 
-        var suit,
+        this.deck = [];
+        this.generateDeck();
+    }
+
+
+    /**
+     * generates the deck of cards
+     */
+    generateDeck () {
+
+        let suit,
             face;
 
         for (suit = 0; suit < 4; suit += 1) {
@@ -51,25 +41,23 @@ _.extend(DeckOfCards.prototype, {
             for (face = 0; face < 13; face += 1) {
 
                 this.deck.push({
-                    id: face + 1,
-                    className: this.suit[suit] + '-' + this.face[face],
-                    color: this.colors[this.suit[suit]]
+                    id:        face + 1,
+                    className: suits[suit] + '-' + faces[face],
+                    color:     colors[suits[suit]]
                 });
             }
         }
 
         return this.shuffle();
-    },
+    }
 
 
     /**
-     * shuffle
-     *
-     * @returns {DeckOfCards}
+     * shuffles the deck
      */
-    shuffle: function () {
+    shuffle () {
 
-        var shuffled = [],
+        let shuffled = [],
             rand,
             i;
 
@@ -87,20 +75,18 @@ _.extend(DeckOfCards.prototype, {
         this.deck = shuffled;
 
         return this;
-    },
+    }
 
 
     /**
-     * getCard by class name
-     *
-     * @param className
+     * gets the car by class name - not pretty or efficient
      */
-    getCard: function (className) {
+    getCard (className) {
 
         className = className.replace(/card\ /g, '');
 
-        return this.deck.find(function (card) {
+        return this.deck.find((card) => {
             return card.className === className;
         });
     }
-});
+}

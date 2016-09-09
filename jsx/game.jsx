@@ -1,51 +1,50 @@
 /**
  * Game
- * @param cards
- * @param board
- * @constructor
+ * @class
  */
-var Game = function (cards, board) {
+class Game {
 
-    // map cards class
-    this.cards = cards;
-    this.board = board;
+    constructor (cards, board) {
 
-    this.playChannels = new Array(7);
-    this.stackChannels = [[{}], [{}], [{}], [{}]];
-    this.stackChannels.map(function (obj) {
-        obj[0].className = 'empty';
-    });
+        // map cards class
+        this.cards = cards;
+        this.board = board;
 
-    this.setupGame();
-};
+        this.playChannels  = new Array(7);
+        this.stackChannels = [[{}], [{}], [{}], [{}]];
+        this.stackChannels.map(function (obj) {
+            obj[0].className = 'empty';
+        });
+
+        this.setupGame();
+    }
 
 
-_.extend(Game.prototype, {
+    /**
+     * checks the channel
+     */
+    checkChannel () {
 
-
-    checkChannel: function () {
-
-        var target,
+        let activeCard = this.cards.getCard(this.board.card.className),
+            target,
             channel,
-            lastCard,
-            activeCard = this.cards.getCard(this.board.card.className);
+            lastCard;
 
         if (this.board.activeZone) {
-            target = this.board.activeZone.target;
+            target  = this.board.activeZone.target;
             channel = target.getAttribute('data-drop');
 
             if (target.className.match(/stack/g)) {
                 channel = this.stackChannels[channel];
 
-                // @TODO
+                // @TODO - allow the user to move a stack
 
             } else {
-                channel = this.playChannels[channel];
+                channel  = this.playChannels[channel];
                 lastCard = channel[channel.length - 1];
 
                 if ((lastCard.id - 1 === activeCard.id) && (lastCard.color !== activeCard.color)) {
                     console.log('we can drop here', this.board.previousZone);
-
 
                     this.removeCard(this.playChannels, this.board.previousZone, activeCard);
 
@@ -57,17 +56,20 @@ _.extend(Game.prototype, {
                 _.trigger('release:card');
             }
         }
-    },
+    }
 
 
-    removeCard: function (channel, index, card) {
+    /**
+     * removes the car from a channel
+     */
+    removeCard (channel, index, card) {
 
-        var i;
+        let i;
 
         channel[index].find(function (channelCard, count) {
 
             if (channelCard.className === card.className) {
-                i = count
+                i = count;
             }
         });
 
@@ -76,16 +78,18 @@ _.extend(Game.prototype, {
 
         try {
             channel[index][i - 1].faceUp = true;
-        } catch (e) {}
-    },
+        } catch (e) {
+            console.error(e);
+        }
+    }
 
 
     /**
-     * setupGame
+     * setup Game
      */
-    setupGame: function () {
+    setupGame () {
 
-        var cards = 0,
+        let cards = 0,
             col,
             row;
 
@@ -117,7 +121,7 @@ _.extend(Game.prototype, {
      * render
      * @returns {Game}
      */
-    //render: function () {
+    //render () {
     //
     //    var template = Handlebars.compile(document.getElementById('playBoard').innerHTML);
     //
@@ -129,4 +133,4 @@ _.extend(Game.prototype, {
     //    _.trigger('rebind:events');
     //    return this;
     //}
-});
+}

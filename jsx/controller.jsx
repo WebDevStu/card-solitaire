@@ -7,27 +7,27 @@
  * View class renders the game
  */
 
-(function () {
+(() => {
 
-    var deck        = new DeckOfCards(),
-        board       = new Board(),
-        game        = new Game(deck, board),
-        view        = new View(game);
+    const
+        deck  = new DeckOfCards(),
+        board = new Board(),
+        game  = new Game(deck, board),
+        view  = new View(game);
 
     view.render();
 
-    _
-        .listenTo({
-            'release:card':     view.render
-        }, view)
-        .listenTo({
-            'set:dragging':     board.setDragging,
-            'move:card':        board.moveCards,
-            'drop:card':        board.dropCard,
-            'release:card':     board.releaseDragging
-        }, board)
-        .listenTo({
-            'drop:card':        game.checkChannel
-        }, game);
+    _.listenTo({
+        'release:card':     view.render
+    }, view)
+    .listenTo({
+        'set:dragging':     board.setDragging,
+        'move:card':        board.moveCards,
+        'drop:card':        board.dropCard,
+        'release:card':     board.releaseDragging
+    }, board)
+    .listenTo({
+        'drop:card':        game.checkChannel
+    }, game);
 
-} ());
+}) ();

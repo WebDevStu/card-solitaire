@@ -1,26 +1,32 @@
 
-var _ = {
+class Utils {
+
+    constructor () {
+        this.events = {};
+    }
 
 
     /**
-     * toArray
-     * @param arrayLike
-     * @returns {Array}
-     */
-    toArray: function (arrayLike) {
-        return Array.prototype.slice.call(arrayLike);
-    },
-
-
-
-    /**
-     * extend
+     * converts to array
      *
-     * @param object
-     * @param extend
-     * @returns {*}
+     * @method toArray
+     * @param  {Object} arrayLike [array like object]
+     * @return {Array}            [definately an array]
      */
-    extend: function (object, extend) {
+    toArray (arrayLike) {
+        return Array.prototype.slice.call(arrayLike);
+    }
+
+
+    /**
+     * extend an object
+     *
+     * @method extend
+     * @param  {Object} object [original object]
+     * @param  {Object} extend [extend object]
+     * @return {Object}        [the original object mutated]
+     */
+    extend (object, extend) {
 
         var prop;
 
@@ -31,23 +37,19 @@ var _ = {
         }
 
         return object;
-    },
+    }
 
 
     /**
-     * events object
+     * events arregator listener
+     *
+     * @method listenTo
+     * @param  {String} listener   [the string to listen to]
+     * @param  {Function} callback [the callback when triggered]
+     * @param  {Object} scope      [the scope to bind it to]
+     * @return {Object}            [this underscore instance]
      */
-    events: {},
-
-
-    /**
-     * listenTo
-     * @param listener
-     * @param callback
-     * @param scope
-     * @returns _
-     */
-    listenTo: function (listener, callback, scope) {
+    listenTo (listener, callback, scope) {
 
         scope = scope || this;
 
@@ -60,7 +62,7 @@ var _ = {
 
         } else if (typeof listener === 'object') {
 
-            for (var prop in listener) {
+            for (let prop in listener) {
                 if (listener.hasOwnProperty(prop)) {
 
                     listener[prop].__scope = callback;
@@ -72,21 +74,22 @@ var _ = {
         }
 
         return _;
-    },
+    }
 
 
     /**
-     * trigger
+     * triggers any found callback method that is registered to listen
      *
-     * @param trigger
-     * @returns _
+     * @method trigger
+     * @param  {String} trigger [the string id to trigger]
+     * @return {Object}         [this underscore instance]
      */
-    trigger: function (trigger) {
+    trigger (trigger) {
 
-        var toFire = _.events[trigger] || [],
-            args = _.toArray(arguments);
+        let toFire = _.events[trigger] || [],
+            args   = _.toArray(arguments);
 
-        toFire.forEach(function (callback) {
+        toFire.forEach((callback) => {
 
             if (args.length > 1) {
                 callback.apply(callback.__scope, args.slice(1));
@@ -97,4 +100,6 @@ var _ = {
 
         return _;
     }
-};
+}
+
+const _ = new Utils();

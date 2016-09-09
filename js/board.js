@@ -1,67 +1,104 @@
+'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 /**
  * GameBoard
- * @constructor
+ * @class
  */
 var Board = function () {
 
-    this.zoneMatrix = [];
-};
+    /**
+     * constructor function
+     */
+    function Board() {
+        _classCallCheck(this, Board);
 
-// extend the prototype
-_.extend(Board.prototype, {
-
+        this.zoneMatrix = [];
+    }
 
     /**
-     * moveCards
-     * @param x
-     * @param y
+     * move cards, takes x & y coordinates and adds attributes to the selected
+     * card
      */
-    moveCards: function (x, y) {
 
-        // if dragging & card
-        if (this.dragging && this.card) {
 
-            // move the card
-            this.card.style.position = 'fixed';
-            this.card.style.left = (x - 62) + 'px';
-            this.card.style.top = (y - 87) + 'px';
-            this.card.style.zIndex = 999;
+    _createClass(Board, [{
+        key: 'moveCards',
+        value: function moveCards(x, y) {
+
+            // if dragging & card
+            if (this.dragging && this.card) {
+
+                // move the card
+                this.card.style.position = 'fixed';
+                this.card.style.left = x - 62 + 'px';
+                this.card.style.top = y - 87 + 'px';
+                this.card.style.zIndex = 999;
+            }
         }
-    },
 
+        /**
+         * gets the zone that the card is part of
+         */
 
-    getZone: function (x, y) {
+    }, {
+        key: 'getZone',
+        value: function getZone(x, y) {
 
-        return this.zoneMatrix.find(function (zone) {
+            return this.zoneMatrix.find(function (zone) {
 
-            var onXAxis = (x >= zone.left) && (x <= (zone.left + zone.width)),
-                onYAxis = (y >= zone.top) &&  (y <= (zone.top + zone.height));
+                var onXAxis = x >= zone.left && x <= zone.left + zone.width,
+                    onYAxis = y >= zone.top && y <= zone.top + zone.height;
 
-            return onXAxis && onYAxis;
-        });
-    },
+                return onXAxis && onYAxis;
+            });
+        }
 
+        /**
+         * drop card, cancels the dragging param and drop if into the selected
+         * zone
+         */
 
-    dropCard: function (x, y) {
+    }, {
+        key: 'dropCard',
+        value: function dropCard(x, y) {
 
-        // find the zone
-        this.activeZone = this.getZone(x, y);
+            // find the zone
+            this.activeZone = this.getZone(x, y);
 
-        this.card.removeAttribute('style');
-    },
+            this.card.removeAttribute('style');
 
+            this.dragging = false;
+        }
 
-    setDragging: function (evt) {
+        /**
+         * starts the dragging - and marks the card that is selected
+         */
 
-        this.card = evt.currentTarget;
-        this.previousZone = this.card.parentNode.getAttribute('data-drop');
-        this.dragging = true;
-    },
+    }, {
+        key: 'setDragging',
+        value: function setDragging(evt) {
 
+            this.card = evt.currentTarget;
+            this.previousZone = this.card.parentNode.getAttribute('data-drop');
+            this.dragging = true;
+        }
 
-    releaseDragging: function () {
+        /**
+         * stops the dragging and nulls the card
+         */
 
-        this.card = null;
-        this.dragging = false;
-    }
-});
+    }, {
+        key: 'releaseDragging',
+        value: function releaseDragging() {
+
+            this.card = null;
+            this.dragging = false;
+        }
+    }]);
+
+    return Board;
+}();

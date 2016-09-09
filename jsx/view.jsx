@@ -1,31 +1,42 @@
 
+/**
+ * view class
+ *
+ * @class
+ */
+class View {
 
-var View = function (gameClass) {
+    /**
+     * constructor function
+     *
+     * @constructor
+     */
+    constructor (gameClass) {
 
-    this.game = gameClass;
-    this.$board = document.getElementById('board');
-};
+        this.game   = gameClass;
+        this.$board = document.getElementById('board');
+    }
 
 
-_.extend(View.prototype, {
+    /**
+     * binds the events to the dom elements
+     */
+    bindEvents () {
 
+        let matrix = [];
 
-    bindEvents: function () {
-
-        var matrix = [];
-
-        this.cards = _.toArray(this.$board.querySelectorAll('.card:not(.faceDown)'));
+        this.cards     = _.toArray(this.$board.querySelectorAll('.card:not(.faceDown)'));
         this.dropZones = _.toArray(this.$board.querySelectorAll('.drop'));
 
         // start dragging on a cards
-        this.cards.forEach(function (card) {
+        this.cards.forEach((card) => {
             card.addEventListener('mousedown', function (evt) {
                 _.trigger('set:dragging', evt);
             }, false);
         }, this);
 
         // mouse over play channels
-        this.dropZones.forEach(function (zone) {
+        this.dropZones.forEach((zone) => {
 
             matrix.push({
                 target: zone,
@@ -39,25 +50,25 @@ _.extend(View.prototype, {
         this.zoneMatrix = matrix;
 
         // mouse up
-        document.documentElement.addEventListener('mouseup', function (evt) {
+        document.documentElement.addEventListener('mouseup', (evt) => {
             _.trigger('drop:card', evt.pageX, evt.pageY);
         }, false);
 
         // mouse move
-        document.body.addEventListener('mousemove', function (evt) {
+        document.body.addEventListener('mousemove', (evt) => {
             _.trigger('move:card', evt.pageX, evt.pageY);
         }, false);
 
         return this;
-    },
+    }
 
 
 
-    render: function () {
+    render () {
 
         console.log('render');
 
-        var template = Handlebars.compile(document.getElementById('playBoard').innerHTML);
+        let template = Handlebars.compile(document.getElementById('playBoard').innerHTML);
 
         this.$board.innerHTML = template({
             playChannels:  this.game.playChannels,
@@ -66,4 +77,4 @@ _.extend(View.prototype, {
 
         return this.bindEvents();
     }
-});
+}
